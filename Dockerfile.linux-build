@@ -1,6 +1,9 @@
 # Dockerfile для сборки EFD Unpacker (Linux)
 FROM python:3.11
 
+# Установить uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 # Установить базовые системные зависимости (python, pip, build tools, qt, etc.)
 RUN apt-get update && \
     apt-get install -y --no-install-recommends sudo zip
@@ -8,6 +11,9 @@ RUN apt-get update && \
 # Скопировать проект
 COPY . /app
 WORKDIR /app
+
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_LINK_MODE=copy
 
 RUN make install-deps
 RUN make test

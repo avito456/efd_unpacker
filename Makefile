@@ -34,7 +34,7 @@ help:
 	@echo "  check                   - Проверить готовность к сборке"
 	@echo ""
 	@echo "Текущая платформа: $(PLATFORM)"
-	@echo "Python: $(PYTHON)"
+	@echo "Python: $(PYTHON) (через uv)"
 
 check:
 	@sh -c '\
@@ -44,7 +44,8 @@ check:
 	echo "Python: $$($(PYTHON) --version 2>&1)"; \
 	echo ""; \
 	echo "Зависимости:"; \
-	$(PYTHON) -c "import PyInstaller" 2>/dev/null && echo "✓ PyInstaller" || { echo "✗ PyInstaller"; FAILED=1; }; \
+	command -v uv >/dev/null 2>&1 && echo "✓ uv" || { echo "✗ uv"; FAILED=1; }; \
+	uv run python -c "import PyInstaller" 2>/dev/null && echo "✓ PyInstaller" || { echo "✗ PyInstaller"; FAILED=1; }; \
 	command -v $(PYTHON) >/dev/null 2>&1 && echo "✓ Python" || { echo "✗ Python"; FAILED=1; }; \
 	if [ "$(PLATFORM)" = "macos" ]; then \
 	  command -v create-dmg >/dev/null 2>&1 && echo "✓ create-dmg" || { echo "✗ create-dmg"; FAILED=1; }; \
@@ -96,7 +97,7 @@ build-windows: clean create-version check generate-spec
 
 test:
 	@echo "Running tests..."
-	$(PYTHON) -m pytest tests/ -v
+	uv run pytest tests/ -v
 
 generate-spec:
 	@echo "Generating EFDUnpacker.spec from template..."
@@ -107,13 +108,11 @@ generate-spec:
 	
 generate-release-notes:
 	@echo "Generating release notes..."
-	$(PYTHON) scripts/generate_release_notes.py > release_notes.md
+	uv run python scripts/generate_release_notes.py > release_notes.md
 	
 install-deps:
 	@echo "Installing development dependencies..."
-	$(PYTHON) -m pip install --upgrade pip setuptools wheel PyInstaller
-	$(PYTHON) -m pip install --only-binary=:all: -r requirements.txt
-	$(PYTHON) -m pip install --only-binary=:all: -r requirements-test.txt;
+	uv sync
 	@if [ "$(PLATFORM)" = "linux" ]; then \
 		sudo apt-get update; \
 		sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -172,7 +171,7 @@ clean:
 # Linux build commands
 build-linux-executable:
 	@echo "Building Linux executable with PyInstaller..."
-	pyinstaller --noconfirm --onefile --name=efd_unpacker \
+	uv run pyinstaller --noconfirm --onefile --name=efd_unpacker \
 		--paths src \
 		--add-data "translations$(PYI_DATASEP)translations" \
 		--add-data "resources$(PYI_DATASEP)resources" \
@@ -251,7 +250,7 @@ create-linux-archives:
 # Windows build commands
 build-windows-executable:
 	@echo "Building Windows executable with PyInstaller..."
-	pyinstaller --noconfirm --onefile --windowed $(if $(wildcard resources/icon.ico),--icon=resources/icon.ico,) \
+	uv run pyinstaller --noconfirm --onefile --windowed $(if $(wildcard resources/icon.ico),--icon=resources/icon.ico,) \
 		--paths src \
 		--add-data "translations$(PYI_DATASEP)translations" \
 		--add-data "resources$(PYI_DATASEP)resources" \
@@ -329,7 +328,7 @@ create-windows-setup:
 # macOS build commands
 build-macos-app:
 	@echo "Building macOS app with PyInstaller..."
-	pyinstaller --noconfirm EFDUnpacker.spec
+	uv run pyinstaller --noconfirm EFDUnpacker.spec
 	@if [ ! -d "dist/EFDUnpacker.app" ]; then \
 		echo "Error: EFDUnpacker.app not found in dist directory."; \
 		exit 1; \

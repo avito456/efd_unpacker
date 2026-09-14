@@ -14,9 +14,8 @@
 
 ## Требования
 
-- Python 3.9+
-- зависимости из `requirements.txt`
-- PyInstaller
+- Python 3.11+
+- uv
 - Git
 
 Платформенные дополнения:

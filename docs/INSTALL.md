@@ -84,8 +84,8 @@ sudo apt-get install -f
 ```bash
 git clone https://github.com/IngvarConsulting/efd_unpacker.git
 cd efd_unpacker
-python -m pip install -r requirements.txt
-python main.py
+uv sync
+uv run python main.py
 ```
 
 Для сборки пакетов см. [BUILD.md](BUILD.md).

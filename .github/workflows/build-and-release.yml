@@ -21,16 +21,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
         with:
           python-version: '3.11'
+          enable-cache: 'auto'
       - name: Setup CI environment
         run: |
           make install-deps
       - name: Run tests
-        env:
-          PYTHONPATH: src
         run: |
           make test
 
@@ -40,10 +39,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
         with:
           python-version: '3.11'
+          enable-cache: 'auto'
       - name: Setup CI environment
         run: |
           make install-deps
@@ -65,10 +65,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
         with:
           python-version: '3.11'
+          enable-cache: 'auto'
       - name: Setup CI environment
         run: |
           make install-deps
@@ -89,10 +90,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
         with:
           python-version: '3.11'
+          enable-cache: 'auto'
       - name: Setup CI environment
         run: |
           make install-deps
@@ -240,10 +242,11 @@ jobs:
         with:
           path: artifacts
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v1
         with:
           python-version: '3.11'
+          enable-cache: 'auto'
 
       - name: Create version and generate release notes
         id: release_meta
