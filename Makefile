@@ -80,17 +80,20 @@ check:
 
 build-macos: clean create-version check generate-spec
 	@echo "Building for macOS..."
+	@mkdir -p build dist && touch build/.metadata_never_index dist/.metadata_never_index
 	@$(MAKE) build-macos-app
 	@$(MAKE) create-macos-dmg
 
 build-linux: clean create-version check generate-spec
 	@echo "Building for Linux..."
+	@mkdir -p build dist && touch build/.metadata_never_index dist/.metadata_never_index
 	@$(MAKE) build-linux-executable
 	@$(MAKE) create-linux-appimage
 	@$(MAKE) create-linux-deb
 
 build-windows: clean create-version check generate-spec
 	@echo "Building for Windows..."
+	@mkdir -p build dist && touch build/.metadata_never_index dist/.metadata_never_index
 	@$(MAKE) build-windows-executable
 	@$(MAKE) create-windows-msi
 	@$(MAKE) create-windows-setup
