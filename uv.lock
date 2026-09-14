@@ -159,7 +159,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "onec-dtools", specifier = "==0.5.0" },
+    { name = "onec-dtools", directory = "vendor/onec-dtools" },
     { name = "pyqt5", specifier = "==5.15.11" },
 ]
 
@@ -196,11 +196,7 @@ wheels = [
 [[package]]
 name = "onec-dtools"
 version = "0.5.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a8/b9/5eb16e7b2f8ce2aa63a2e9f1e7897c9941d75bff1287860a45b3bf8299d1/onec_dtools-0.5.0.zip", hash = "sha256:201234cc701b92a26989dbf1dae6b0b6f02a5dc42bdc4e65d80bcf36fb8c7741", size = 19407, upload-time = "2017-02-23T20:24:28.016Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/97/75/15c1703fdfff60ba1b8a2ff6599659e7d5a880b4e838fd7c4764da442362/onec_dtools-0.5.0-py3-none-any.whl", hash = "sha256:0b98616eb9bb40ae444a80098fa504097a1aa388bfb9a48671523665778b6e33", size = 16273, upload-time = "2017-02-23T20:24:30.476Z" },
-]
+source = { directory = "vendor/onec-dtools" }
 
 [[package]]
 name = "packaging"

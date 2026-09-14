@@ -1,0 +1,10 @@
+[project]
+name = "onec-dtools"
+version = "0.5.0"
+description = "Tools for working with 1C:Enterprise binary files (vendored copy)"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+dependencies = []
+
+[tool.setuptools]
+packages = ["onec_dtools"]

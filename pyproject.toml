@@ -10,6 +10,9 @@ dependencies = [
     "PyQt5==5.15.11",
 ]
 
+[tool.uv.sources]
+onec-dtools = { path = "vendor/onec-dtools" }
+
 [dependency-groups]
 dev = [
     "pytest>=7.0.0",
